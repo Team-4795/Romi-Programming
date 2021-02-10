@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.AutonomousDistance;
 import frc.robot.commands.AutonomousTime;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.commands.Drive;
+import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.OnBoardIO;
 import frc.robot.subsystems.OnBoardIO.ChannelMode;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -20,21 +20,25 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 
 /**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and button mappings) should be declared here.
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a "declarative" paradigm, very little robot logic should
+ * actually be handled in the {@link Robot} periodic methods (other than the
+ * scheduler calls). Instead, the structure of the robot (including subsystems,
+ * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain m_drivetrain = new Drivetrain();
+  private final Drivebase m_drivebase = Robot.drivebase;
   private final OnBoardIO m_onboardIO = new OnBoardIO(ChannelMode.INPUT, ChannelMode.INPUT);
 
   // Assumes a gamepad plugged into channnel 0
-  private final Joystick m_controller = new Joystick(0);
+  // public static final Joystick m_controller = new Joystick(0);
+
+  // Define controller
+  public final Controller main;
 
   // Create SmartDashboard chooser for autonomous routines
-  private final SendableChooser<Command> m_chooser = new SendableChooser<>();
+  // private final SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   // NOTE: The I/O pin functionality of the 5 exposed I/O pins depends on the hardware "overlay"
   // that is specified when launching the wpilib-ws server on the Romi raspberry pi.
@@ -49,6 +53,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    main = new Controller(Constants.CONTROLLER_MAIN);
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -62,7 +67,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // Default command is arcade drive. This will run unless another command
     // is scheduled over it.
-    m_drivetrain.setDefaultCommand(getArcadeDriveCommand());
+    m_drivebase.setDefaultCommand(new Drive(m_drivebase));
 
     // Example of how to use the onboard IO
     Button onboardButtonA = new Button(m_onboardIO::getButtonAPressed);
@@ -71,9 +76,9 @@ public class RobotContainer {
         .whenInactive(new PrintCommand("Button A Released"));
 
     // Setup SmartDashboard options
-    m_chooser.setDefaultOption("Auto Routine Distance", new AutonomousDistance(m_drivetrain));
-    m_chooser.addOption("Auto Routine Time", new AutonomousTime(m_drivetrain));
-    SmartDashboard.putData(m_chooser);
+    // m_chooser.setDefaultOption("Auto Routine Distance", new AutonomousDistance(m_drivetrain));
+    // m_chooser.addOption("Auto Routine Time", new AutonomousTime(m_drivetrain));
+    // SmartDashboard.putData(m_chooser);
   }
 
   /**
@@ -82,7 +87,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return m_chooser.getSelected();
+    return new AutonomousTime(m_drivebase);
   }
 
   /**
@@ -90,8 +95,8 @@ public class RobotContainer {
    *
    * @return the command to run in teleop
    */
-  public Command getArcadeDriveCommand() {
-    return new ArcadeDrive(
-        m_drivetrain, () -> -m_controller.getRawAxis(1), () -> m_controller.getRawAxis(2));
-  }
+  //public Command getArcadeDriveCommand() {
+  //  return new ArcadeDrive(
+  //  m_drivetrain, () -> -m_controller.getRawAxis(1), () -> m_controller.getRawAxis(2));
+  //}
 }
