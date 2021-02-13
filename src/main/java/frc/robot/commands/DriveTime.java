@@ -21,10 +21,11 @@ public class DriveTime extends CommandBase {
    * @param drive The drivetrain subsystem on which this command will run
    */
   public DriveTime(double speed, double time, Drivebase drive) {
+    addRequirements(drive);
     m_speed = speed;
     m_duration = time * 1000;
     m_drive = drive;
-    addRequirements(drive);
+    
   }
 
   // Called when the command is initially scheduled.
