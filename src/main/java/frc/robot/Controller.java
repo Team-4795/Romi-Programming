@@ -51,8 +51,8 @@ public class Controller {
     return new Vector2d(
       // removeDeadzone(raw.getRawAxis(type > 0 ? (type > 1 ? 2 : 4) : 3)),
       // removeDeadzone(raw.getRawAxis(type > 0 ? (type > 1 ? 5 : 5) : 2)));
-      removeDeadzone(raw.getRawAxis(type == 0 ? 3 : 4)),
-      removeDeadzone(raw.getRawAxis(type == 0 ? 2 : 5)));
+      removeDeadzone(raw.getRawAxis(2)), // it was getRawAxis(type == 0 ? 3 : 4) but that broke with our controller
+      removeDeadzone(raw.getRawAxis(3))); // same as above but getRawAxis(type == 0 ? 2 : 5)
   }
   public double leftTrigger() {
     return type == 0 ? raw.getRawButton(7) ? 1 : 0 : removeDeadzone(raw.getRawAxis(2));
