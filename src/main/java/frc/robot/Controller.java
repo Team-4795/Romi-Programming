@@ -33,6 +33,7 @@ public class Controller {
 
   public Controller(int port) {
     raw = new Joystick(port);
+    
     if (raw.getButtonCount() == 13 && raw.getAxisCount() == 4) {
       type = 0; // Air Flow
     } else if (raw.getButtonCount() == 10 && raw.getAxisCount() == 6) {
@@ -44,6 +45,12 @@ public class Controller {
       // throw new Error("Unknown controller found with " + raw.getButtonCount() + " buttons and " + raw.getAxisCount() + " axes.");
     }
   }
+
+
+  public Joystick getJoy() {
+    return raw;
+  }
+
   public Vector2d leftJoystick() {
     return new Vector2d(removeDeadzone(raw.getRawAxis(0)), removeDeadzone(raw.getRawAxis(1)));
   }

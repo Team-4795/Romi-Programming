@@ -20,6 +20,7 @@ import frc.robot.subsystems.OnBoardIO.ChannelMode;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -32,7 +33,6 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivebase m_drivebase = Robot.drivebase;
   private final OnBoardIO m_onboardIO = new OnBoardIO(ChannelMode.INPUT, ChannelMode.INPUT);
-
   // Assumes a gamepad plugged into channnel 0
   // public static final Joystick m_controller = new Joystick(0);
 
@@ -77,6 +77,23 @@ public class RobotContainer {
         .whenActive(new PrintCommand("Button A Pressed"))
         .whenInactive(new PrintCommand("Button A Released"));
 
+    JoystickButton buttonA = new JoystickButton(main.getJoy(), 3);
+    JoystickButton buttonB = new JoystickButton(main.getJoy(), 2);
+
+    buttonA.whenPressed(new DriveDistance(0.5, 12, m_drivebase));
+    buttonB.whenPressed(new Drive(m_drivebase));
+
+
+      
+
+
+    /*
+     * When A is pressed, drive forward 6 inches
+     * If B is pressed while in drive forward, manual control
+     * After 6 inches complete, manual control
+     */
+    
+
     // Setup SmartDashboard options
     // m_chooser.setDefaultOption("Auto Routine Distance", new AutonomousDistance(m_drivetrain));
     // m_chooser.addOption("Auto Routine Time", new AutonomousTime(m_drivetrain));
@@ -101,4 +118,5 @@ public class RobotContainer {
   //  return new ArcadeDrive(
   //  m_drivetrain, () -> -m_controller.getRawAxis(1), () -> m_controller.getRawAxis(2));
   //}
+
 }
