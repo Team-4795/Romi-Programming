@@ -44,6 +44,13 @@ public class Drivebase extends SubsystemBase {
 
     diffDrive = new DifferentialDrive(leftMotor, rightMotor);
 
+    leftEncoder.setDistancePerPulse((Math.PI * kWheelDiameterInch) / kCountsPerRevolution);
+    rightEncoder.setDistancePerPulse((Math.PI * kWheelDiameterInch) / kCountsPerRevolution);
+    resetEncoders();
+  }
+  public void resetEncoders() {
+    leftEncoder.reset();
+    rightEncoder.reset();
   }
 
   public void arcadeDrive(double power, double turn) {

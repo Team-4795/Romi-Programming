@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Drivebase;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -11,13 +11,13 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class TriangleDrive extends SequentialCommandGroup {
   /** Creates a new TriangleDrive. */
-  public TriangleDrive(Drivetrain drivetrain) {
+  public TriangleDrive(Drivebase drivebase) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new DriveDistance(-0.5, 10, drivetrain),
-        new TurnDegrees(-0.5, 120, drivetrain),
-        new DriveDistance(-0.5, 10, drivetrain),
-        new TurnDegrees(0.5, 120, drivetrain));
+      new DriveDistance(0.5, 4, drivebase),
+      new TurnAngle(120, 0.5, drivebase),
+      new DriveDistance(0.5, 4, drivebase),
+      new TurnAngle(120, 0.5, drivebase));
   }
 }

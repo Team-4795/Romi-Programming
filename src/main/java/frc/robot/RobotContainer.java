@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.AutonomousTime;
 import frc.robot.commands.Drive;
 import frc.robot.commands.SequentialCommand;
+import frc.robot.commands.DriveDistance;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.OnBoardIO;
 import frc.robot.subsystems.OnBoardIO.ChannelMode;
@@ -88,7 +89,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new SequentialCommand(m_drivebase);
+    return new DriveDistance(0.5, 4, m_drivebase);
   }
 
   /**
