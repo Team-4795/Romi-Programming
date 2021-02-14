@@ -4,13 +4,13 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Drivebase;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class DriveTime extends CommandBase {
   private final double m_duration;
   private final double m_speed;
-  private final Drivetrain m_drive;
+  private final Drivebase m_drive;
   private long m_startTime;
 
   /**
@@ -20,11 +20,12 @@ public class DriveTime extends CommandBase {
    * @param time How much time to drive in seconds
    * @param drive The drivetrain subsystem on which this command will run
    */
-  public DriveTime(double speed, double time, Drivetrain drive) {
+  public DriveTime(double speed, double time, Drivebase drive) {
+    addRequirements(drive);
     m_speed = speed;
     m_duration = time * 1000;
     m_drive = drive;
-    addRequirements(drive);
+    
   }
 
   // Called when the command is initially scheduled.

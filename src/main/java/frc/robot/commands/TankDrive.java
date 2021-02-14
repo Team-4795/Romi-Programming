@@ -4,12 +4,12 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Drivebase;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import java.util.function.Supplier;
 
 public class TankDrive extends CommandBase {
-  private final Drivetrain m_drivetrain;
+  private final Drivebase m_drivetrain;
   private final Supplier<Double> m_leftSpeedSupplier;
   private final Supplier<Double> m_rightSpeedSupplier;
 
@@ -22,7 +22,7 @@ public class TankDrive extends CommandBase {
    * @param zaxisRotateSupplier Lambda supplier of rotational speed
    */
   public TankDrive(
-      Drivetrain drivetrain,
+      Drivebase drivetrain,
       Supplier<Double> leftSupplier,
       Supplier<Double> rightSupplier) {
     m_drivetrain = drivetrain;
@@ -38,7 +38,7 @@ public class TankDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drivetrain.tankDrive(m_leftSpeedSupplier.get(), m_rightSpeedSupplier.get());
+    // m_drivetrain.tankDrive(m_leftSpeedSupplier.get(), m_rightSpeedSupplier.get());
   }
 
   // Called once the command ends or is interrupted.

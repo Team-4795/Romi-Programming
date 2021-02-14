@@ -7,32 +7,32 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivebase;
 
-public class DriveDistance extends CommandBase {
 
-  private final Drivebase m_drivebase;
+public class TurnAngle extends CommandBase {
+  private final double m_angle;
   private final double m_speed;
-  private final double m_distance;
+  private final Drivebase m_drivebase;
 
-  /** Creates a new DriveDistance. */
-  public DriveDistance(double speed, double distance, Drivebase drivebase) {
+  /** Creates a new TurnAngle. */
+  public TurnAngle(double angle, double speed, Drivebase drivebase) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivebase);
-    m_drivebase = drivebase;
+    m_angle = angle;
     m_speed = speed;
-    m_distance = distance;
+    m_drivebase = drivebase;
+    
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     m_drivebase.arcadeDrive(0,0);
-    m_drivebase.resetEncoders();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drivebase.arcadeDrive(m_speed, 0);
+    m_drivebase.arcadeDrive(0, m_speed);
   }
 
   // Called once the command ends or is interrupted.
@@ -44,6 +44,7 @@ public class DriveDistance extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (m_drivebase.getLeftDistanceInch() >= m_distance && m_drivebase.getRightDistanceInch() >= m_distance);
+    //return false;
+    return (m_drivebase.getGyroAngleZ() >= m_angle);
   }
 }
