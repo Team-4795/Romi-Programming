@@ -44,6 +44,11 @@ public class DriveDistance extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (m_drivebase.getLeftDistanceInch() >= m_distance && m_drivebase.getRightDistanceInch() >= m_distance);
+    if (m_distance > 0) {
+      return (m_drivebase.getLeftDistanceInch() >= m_distance && m_drivebase.getRightDistanceInch() >= m_distance);
+    }
+    else {
+      return (m_drivebase.getLeftDistanceInch() <= m_distance && m_drivebase.getRightDistanceInch() <= m_distance);
+    }
+    }
   }
-}
