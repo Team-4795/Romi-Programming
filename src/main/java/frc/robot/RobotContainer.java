@@ -81,7 +81,7 @@ public class RobotContainer {
     JoystickButton buttonA = new JoystickButton(main.getJoy(), 3);
     JoystickButton buttonB = new JoystickButton(main.getJoy(), 2);
 
-    buttonA.whenPressed(new DriveDistance(0.5, 12, m_drivebase));
+    buttonA.whenPressed(new DriveDistance(0.5, 10, m_drivebase));
     buttonB.whenPressed(new Drive(m_drivebase));
 
 

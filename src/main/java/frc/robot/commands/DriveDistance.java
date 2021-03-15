@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivebase;
 
@@ -13,6 +15,9 @@ public class DriveDistance extends CommandBase {
   private final double m_speed;
   private final double m_distance;
 
+  private final PIDController leftController = new PIDController(0.1, 0.05, 0);
+  private final PIDController rightController = new PIDController(0.1, 0.05, 0);
+
   /** Creates a new DriveDistance. */
   public DriveDistance(double speed, double distance, Drivebase drivebase) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -20,6 +25,7 @@ public class DriveDistance extends CommandBase {
     m_drivebase = drivebase;
     m_speed = speed;
     m_distance = distance;
+
   }
 
   // Called when the command is initially scheduled.
@@ -32,7 +38,11 @@ public class DriveDistance extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drivebase.arcadeDrive(m_speed, 0);
+    double leftSpeed = leftController.calculate(m_drivebase.getLeftDistanceInch(), m_distance);
+    double rightSpeed = rightController.calculate(m_drivebase.getRightDistanceInch(), m_distance);
+    SmartDashboard.putNumber("Left Speed", leftSpeed);
+    SmartDashboard.putNumber("Right Speed", rightSpeed);
+    m_drivebase.tankDrive(leftSpeed, rightSpeed);
   }
 
   // Called once the command ends or is interrupted.
@@ -44,11 +54,6 @@ public class DriveDistance extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (m_distance > 0) {
-      return (m_drivebase.getLeftDistanceInch() >= m_distance && m_drivebase.getRightDistanceInch() >= m_distance);
-    }
-    else {
-      return (m_drivebase.getLeftDistanceInch() <= m_distance && m_drivebase.getRightDistanceInch() <= m_distance);
-    }
-    }
+    return false;
   }
+}

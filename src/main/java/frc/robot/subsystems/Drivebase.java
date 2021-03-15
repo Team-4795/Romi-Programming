@@ -58,6 +58,10 @@ public class Drivebase extends SubsystemBase {
     diffDrive.arcadeDrive(power, turn);
   }
 
+  public void tankDrive(double left, double right) {
+    diffDrive.tankDrive(left, right);
+  }
+
   public double getLeftDistanceInch() {
     return leftEncoder.getDistance();
   }
