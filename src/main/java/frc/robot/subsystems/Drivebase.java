@@ -56,10 +56,15 @@ public class Drivebase extends SubsystemBase {
 
   public void arcadeDrive(double power, double turn) {
     diffDrive.arcadeDrive(power, turn);
+    SmartDashboard.putNumber("Forward Speed", power);
   }
 
   public void tankDrive(double left, double right) {
-    diffDrive.tankDrive(left, right);
+
+    SmartDashboard.putNumber("Left Speed", left);
+    SmartDashboard.putNumber("Right Speed", right);
+
+    diffDrive.tankDrive(left, right, false);
   }
 
   public double getLeftDistanceInch() {
@@ -68,6 +73,10 @@ public class Drivebase extends SubsystemBase {
 
   public double getRightDistanceInch() {
     return rightEncoder.getDistance();
+  }
+
+  public double getLeftSpeed() {
+    return leftEncoder.getRate();
   }
 
   public double getGyroAngleZ() {
@@ -84,5 +93,6 @@ public class Drivebase extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Left Encoder", getLeftDistanceInch());
     SmartDashboard.putNumber("Right Encoder", getRightDistanceInch());
+    SmartDashboard.putNumber("Encoder Speed", getLeftSpeed());
   }
 }

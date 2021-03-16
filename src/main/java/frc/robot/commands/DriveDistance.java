@@ -15,8 +15,8 @@ public class DriveDistance extends CommandBase {
   private final double m_speed;
   private final double m_distance;
 
-  private final PIDController leftController = new PIDController(0.1, 0.05, 0);
-  private final PIDController rightController = new PIDController(0.1, 0.05, 0);
+  private final PIDController leftController = new PIDController(0.2, 0.0, 0.01);
+  private final PIDController rightController = new PIDController(0.2, 0.0, 0.01);
 
   /** Creates a new DriveDistance. */
   public DriveDistance(double speed, double distance, Drivebase drivebase) {
@@ -40,8 +40,7 @@ public class DriveDistance extends CommandBase {
   public void execute() {
     double leftSpeed = leftController.calculate(m_drivebase.getLeftDistanceInch(), m_distance);
     double rightSpeed = rightController.calculate(m_drivebase.getRightDistanceInch(), m_distance);
-    SmartDashboard.putNumber("Left Speed", leftSpeed);
-    SmartDashboard.putNumber("Right Speed", rightSpeed);
+
     m_drivebase.tankDrive(leftSpeed, rightSpeed);
   }
 
